@@ -1,4 +1,4 @@
-<html>
+<html lang="en-IE">
 <head>
     <meta charset="utf-8">
     <title>Hello World</title>
@@ -47,5 +47,16 @@
 <h2>Environment</h2>
 <pre>{{ range .Env}}{{ . }}
 {{ end }}</pre>
+<h2>App</h2>
+<dl>
+    <dt>Version</dt>
+    <dd>{{ .App.Version }}</dd>
+    <dt>VCS Revision</dt>
+    <dd>{{ .App.VcsRevision }}</dd>
+    <dt>VCS Time</dt>
+    <dd>{{ .App.VcsTime}}</dd>
+    <dt>Architecture</dt>
+    <dd>{{ .App.Arch }}</dd>
+</dl>
 </body>
 </html>
