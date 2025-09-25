@@ -18,9 +18,14 @@ jobs:
           VER=$(head -n1 VERSION)
           echo "VERSION=$VER" >>$GITHUB_ENV
 
+      - name: Install qemu
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: qemu-user-binfmt qemu-user-static
+          version: 1.0
+
       - name: Build and push with podman
         run: |
-          apt install qemu-user-binfmt qemu-user-static
           echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
           podman build --tag ghcr.io/turscar/hello-world:amd64 --file=Containerfile.amd64 .
           podman build --tag ghcr.io/turscar/hello-world:arm64 --file=Containerfile.arm64 .
