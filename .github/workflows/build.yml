@@ -19,10 +19,8 @@ jobs:
           echo "VERSION=$VER" >>$GITHUB_ENV
 
       - name: Install qemu
-        uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: qemu-user-binfmt qemu-user-static
-          version: 1.0
+        uses: docker/setup-qemu-action@v3
+        platforms: amd64
 
       - name: Build and push with podman
         run: |

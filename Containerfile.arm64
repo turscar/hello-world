@@ -1,6 +1,5 @@
 # Build stage
 FROM golang:1.25.1-alpine AS build
-RUN apk --no-cache add qemu-user-static
 WORKDIR /app
 COPY go.mod go.sum ./
 
