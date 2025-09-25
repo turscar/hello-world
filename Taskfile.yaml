@@ -1,0 +1,15 @@
+version: 3
+
+tasks:
+  build:
+    vars:
+      VERSION:
+        sh: head -n1 VERSION
+    cmds:
+      - podman build --platform linux/amd64 --tag ghcr.io/turscar/hello-world:amd64 --file=Containerfile .
+      - podman build --platform linux/arm64/v8 --tag ghcr.io/turscar/hello-world:arm64 --file=Containerfile .
+      - podman manifest create ghcr.io/turscar/hello-world:{{ .VERSION }}
+      - podman manifest add ghcr.io/turscar/hello-world:{{ .VERSION }} ghcr.io/turscar/hello-world:amd64
+      - podman manifest add ghcr.io/turscar/hello-world:{{ .VERSION }} ghcr.io/turscar/hello-world:arm64
+      - podman tag ghcr.io/turscar/hello-world:{{ .VERSION }} ghcr.io/turscar/hello-world:latest
+#      - podman manifest push --all ghcr.io/turscar/hello-world:{{ .VERSION }}
