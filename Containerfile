@@ -5,7 +5,7 @@ COPY go.mod go.sum ./
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o hello
+RUN CGO_ENABLED=0 GOOS=linux go build -o hello
 
 # Final stage
 FROM docker.io/alpine:latest
