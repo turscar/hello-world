@@ -1,15 +1,15 @@
 # Build stage
 FROM golang:1.25.1-alpine AS build
-
+RUN apk --no-cache add qemu-user-static
 WORKDIR /app
 COPY go.mod go.sum ./
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o hello
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o hello
 
 # Final stage
-FROM alpine:edge
+FROM docker.io/amd64/alpine:latest
 LABEL org.opencontainers.image.authors="steve@wordtothewise.com"
 LABEL org.opencontainers.image.description="AboutMy.email API server"
 WORKDIR /app

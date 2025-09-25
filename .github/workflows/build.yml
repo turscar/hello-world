@@ -20,9 +20,12 @@ jobs:
 
       - name: Build and push with podman
         run: |
+          apt install qemu-user-binfmt qemu-user-static
           echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
+          podman build --tag ghcr.io/turscar/hello-world:amd64 --file=Containerfile.amd64 .
+          podman build --tag ghcr.io/turscar/hello-world:arm64 --file=Containerfile.arm64 .
           podman manifest create ghcr.io/turscar/hello-world:${{ env.VERSION }}
-          podman build --jobs=4 --platform linux/amd64,linux/arm64/v8 --manifest ghcr.io/turscar/hello-world:${{ env.VERSION }} --file=Containerfile .
+          podman manifest add ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:amd64
+          podman manifest add ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:arm64
           podman tag ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:latest
           podman manifest push --all ghcr.io/turscar/hello-world:${{ env.VERSION }}
-          
