@@ -26,17 +26,17 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
           echo Build amd64
-          podman build --platform linux/amd64 --tag ghcr.io/turscar/hello-world:amd64 --file=Containerfile .
+          podman build --platform linux/amd64 --tag ghcr.io/turscar/hello-world:${{ env.VERSION }}-linux-amd64 --file=Containerfile .
           echo Build arm64/v8
-          podman build --platform linux/arm64/v8 --tag ghcr.io/turscar/hello-world:arm64 --file=Containerfile .
+          podman build --platform linux/arm64/v8 --tag ghcr.io/turscar/hello-world:${{ env.VERSION }}-linux-arm64 --file=Containerfile .
           echo Create manifest
           podman manifest create ghcr.io/turscar/hello-world:${{ env.VERSION }}
           echo List images
           podman images
           echo Add amd64 to manifest
-          podman manifest add ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:amd64
+          podman manifest add ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:${{ env.VERSION }}-linux-amd64
           echo Add arm64 to manifest
-          podman manifest add ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:arm64
+          podman manifest add ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:${{ env.VERSION }}-linux-arm64
           echo Tag latest
           podman tag ghcr.io/turscar/hello-world:${{ env.VERSION }} ghcr.io/turscar/hello-world:latest
           echo List images
