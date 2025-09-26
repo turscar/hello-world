@@ -27,6 +27,6 @@ jobs:
           podman build --env=GOOS --env=GOARCH=arm64 --tag=${REPO}:arm64-${VERSION} --file=Containerfile .
           podman push ${REPO}:arm64-${VERSION}
           podman manifest create ${REPO}:${VERSION}
-          podman manifest add --arch=amd64 ${REPO}:${VERSION} ${REPO}:${VERSION}-${GOOS}-amd64
-          podman manifest add --arch=arm64 ${REPO}:${VERSION} ${REPO}:${VERSION}-${GOOS}-arm64
+          podman manifest add --arch=amd64 ${REPO}:${VERSION} ${REPO}:amd64-${VERSION}
+          podman manifest add --arch=arm64 ${REPO}:${VERSION} ${REPO}:arm64-${VERSION}
           podman manifest push ${REPO}:${VERSION}
