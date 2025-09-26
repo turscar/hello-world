@@ -5,7 +5,7 @@ COPY go.mod go.sum ./
 
 COPY . .
 
-RUN CGO_ENABLED=0 build -o hello
+RUN CGO_ENABLED=0 go build -o hello
 
 # Final stage
 FROM scratch
