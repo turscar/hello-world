@@ -19,7 +19,7 @@ jobs:
         shell: bash
         run: |
           set -o xtrace
-          read -R VERSION <VERSION
+          read -r VERSION <VERSION
           GOOS=linux
           echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
           podman build --env=GOOS --env=GOARCH=amd64 --tag=$(REPO):$(VERSION)-$(GOOS)-amd64 --file=Containerfile .
