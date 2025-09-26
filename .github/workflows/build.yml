@@ -22,11 +22,11 @@ jobs:
           read -r VERSION <VERSION
           GOOS=linux
           echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
-          podman build --env=GOOS --env=GOARCH=amd64 --tag=${REPO}:amd64-${VERSION} --file=Containerfile .
+          podman build --env=GOOS --env=GOARCH=amd64 --tag=${REPO}/amd64:${VERSION} --file=Containerfile .
           podman push ${REPO}:amd64-${VERSION}
-          podman build --env=GOOS --env=GOARCH=arm64 --tag=${REPO}:arm64-${VERSION} --file=Containerfile .
+          podman build --env=GOOS --env=GOARCH=arm64 --tag=${REPO}/arm64:${VERSION} --file=Containerfile .
           podman push ${REPO}:arm64-${VERSION}
           podman manifest create ${REPO}:${VERSION}
-          podman manifest add --arch=amd64 ${REPO}:${VERSION} ${REPO}:amd64-${VERSION}
-          podman manifest add --arch=arm64 ${REPO}:${VERSION} ${REPO}:arm64-${VERSION}
+          podman manifest add --arch=amd64 ${REPO}:${VERSION} ${REPO}/amd64:${VERSION}
+          podman manifest add --arch=arm64 ${REPO}:${VERSION} ${REPO}/arm64:${VERSION}
           podman manifest push ${REPO}:${VERSION}
