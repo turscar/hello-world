@@ -12,4 +12,4 @@ tasks:
       - podman manifest add ghcr.io/turscar/hello-world:{{ .VERSION }} ghcr.io/turscar/hello-world:amd64
       - podman manifest add ghcr.io/turscar/hello-world:{{ .VERSION }} ghcr.io/turscar/hello-world:arm64
       - podman tag ghcr.io/turscar/hello-world:{{ .VERSION }} ghcr.io/turscar/hello-world:latest
-#      - podman manifest push --all ghcr.io/turscar/hello-world:{{ .VERSION }}
+      - podman manifest push --all ghcr.io/turscar/hello-world:{{ .VERSION }}
