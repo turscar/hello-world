@@ -17,8 +17,8 @@ jobs:
 
       - name: Build and push with podman
         shell: bash
-        run: |
-          set -o xtrace
+        run: 
+                    set -o xtrace
           read -r VERSION <VERSION
           GOOS=linux
           echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
